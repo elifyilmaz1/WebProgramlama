@@ -1,14 +1,14 @@
-﻿namespace WebProgramlama.Models
+﻿using WebProgramlama.Models;
+
+namespace WebProgramlama.Models
 {
-    public class calisan
+    public class Calisan
     {
       
             public int Id { get; set; }
-            public string isim { get; set; }
-            public string görev { get; set; }
-            public decimal saatlikUcret { get; set; }
-            public ICollection<randevu> randevular { get; set; }  
-        
-
+            public required string Isim { get; set; }
+            public required string Gorev { get; set; }
+            public decimal SaatlikUcret { get; set; }
+            public required ICollection<Randevu> Randevular { get; set; }  
     }
 }

@@ -1,15 +1,17 @@
-﻿namespace WebProgramalama.Models
+﻿using WebProgramlama.Models;
+
+namespace WebProgramlama.Models
 {
-    public class randevu
+    public class Randevu
     {
         public int Id { get; set; }
-        public int musteriId { get; set; }
-        public int calisanId { get; set; }
-        public DateTime randevuTarihi { get; set; }
-        public string hizmet { get; set; }  
-        public decimal ucret { get; set; }
+        public int MusteriId { get; set; }
+        public int CalisanId { get; set; }
+        public DateTime RandevuTarihi { get; set; }
+        public required string Hizmet { get; set; }  
+        public decimal Ucret { get; set; }
 
-        public calisan calisanlar{ get; set; }
-        public musteri musteriler{ get; set; }
+        public required Calisan Calisanlar{ get; set; }
+        public required Musteri Musteriler{ get; set; }
     }
 }

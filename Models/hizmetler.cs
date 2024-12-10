@@ -1,10 +1,10 @@
-﻿namespace WebProgramalama.Models
+﻿namespace WebProgramlama.Models
 {
-    public class hizmet
+    public class Hizmet
     {
         public int Id { get; set; }
-        public string isim { get; set; }
+        public required string Isim { get; set; }
         public decimal Ucret { get; set; }
-        public ICollection<randevu> randevular { get; set; }
+        public required ICollection<Randevu> Randevular { get; set; }
     }
 }

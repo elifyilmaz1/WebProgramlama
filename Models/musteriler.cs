@@ -1,10 +1,10 @@
-﻿namespace WebProgramalama.Models
+﻿namespace WebProgramlama.Models
 {
-    public class musteri
+    public class Musteri
     {
         public int Id { get; set; }
-        public string isimSoyisim { get; set; }
-        public decimal iletisimNumarasi { get; set; }
-        public ICollection<randevu> randevular { get; set; }
+        public required string IsimSoyisim { get; set; }
+        public decimal IletisimNumarasi { get; set; }
+        public required ICollection<Randevu> Randevular { get; set; }
     }
 }

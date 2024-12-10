@@ -11,7 +11,7 @@ using WebProgramlama.Models;
 
 namespace WebProgramlama.Migrations
 {
-    [DbContext(typeof(UygulamaDbContext))]
+    [DbContext(typeof(UygulamaDbContextModelSnapshot))]
     [Migration("20241130163039_InitialCreate")]
     partial class InitialCreate
     {

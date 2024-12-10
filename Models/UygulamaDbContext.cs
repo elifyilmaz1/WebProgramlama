@@ -1,15 +1,17 @@
-﻿namespace WebProgramalama.Models
+﻿namespace WebProgramlama.Models
 {
     using Microsoft.EntityFrameworkCore;
 
     public class UygulamaDbContext : DbContext
     {
-        public UygulamanDbContext(DbContextOptions<UygulamaDbContext> options) : base(options)
+        public UygulamaDbContext(DbContextOptions<UygulamaDbContext> options)
+            : base(options)
         {
         }
-        public DbSet<calisan> calisanlar{ get; set; }
-        public DbSet<musteri> musteriler{ get; set; }
-        public DbSet<randevu> randevular{ get; set; }
-        public DbSet<hizmet> hizmetler{ get; set; }
+
+        public DbSet<Calisan> Calisanlar { get; set; }
+        public DbSet<Musteri> Musteriler { get; set; }
+        public DbSet<Randevu> Randevular { get; set; }
+        public DbSet<Hizmet> Hizmetler { get; set; }
     }
 }
