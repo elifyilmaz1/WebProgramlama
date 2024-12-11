@@ -1,17 +1,35 @@
-﻿namespace WebProgramlama.Models
-{
-    using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using System;
 
-    public class UygulamaDbContext : DbContext
+
+namespace WebProgramlama.Models
+{
+     public class UygulamaDbContext : DbContext
     {
         public UygulamaDbContext(DbContextOptions<UygulamaDbContext> options)
             : base(options)
         {
         }
+        public DbSet<Calisan> Calisan { get; set; }
+        public DbSet<Musteri> Musteri { get; set; }
+        public DbSet<Randevu> Randevu { get; set; }
+        public DbSet<Hizmet> Hizmet { get; set; }
+     protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        public DbSet<Calisan> Calisanlar { get; set; }
-        public DbSet<Musteri> Musteriler { get; set; }
-        public DbSet<Randevu> Randevular { get; set; }
-        public DbSet<Hizmet> Hizmetler { get; set; }
-    }
+            
+            modelBuilder.Entity<Randevu>()
+                .HasOne(r => r.Calisan)
+                .WithMany(c => c.Randevu)
+                .HasForeignKey(r => r.CalisanId);
+
+            modelBuilder.Entity<Randevu>()
+                .HasOne(r => r.Musteri)
+                .WithMany(m => m.Randevu)
+                .HasForeignKey(r => r.MusteriId);
+        }
 }
+    }
+

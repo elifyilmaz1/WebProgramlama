@@ -1,121 +1,121 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace WebProgramlama.Migrations 
+#nullable disable
+
+namespace WebProgramlama.Migrations
 {
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "calisanlar",
+                name: "Calisan",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    isim = table.Column<string>(type: "text", nullable: false),
-                    görev = table.Column<string>(type: "text", nullable: false),
-                    saatlikUcret = table.Column<decimal>(type: "numeric", nullable: false)
+                    Isim = table.Column<string>(type: "text", nullable: false),
+                    Gorev = table.Column<string>(type: "text", nullable: false),
+                    SaatlikUcret = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_calisanlar", x => x.Id);
+                    table.PrimaryKey("PK_Calisan", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "hizmetler",
+                name: "Hizmet",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    isim = table.Column<string>(type: "text", nullable: false),
+                    Isim = table.Column<string>(type: "text", nullable: false),
                     Ucret = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_hizmetler", x => x.Id);
+                    table.PrimaryKey("PK_Hizmet", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "musteriler",
+                name: "Musteri",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    isimSoyisim = table.Column<string>(type: "text", nullable: false),
-                    iletisimNumarasi = table.Column<decimal>(type: "numeric", nullable: false)
+                    IsimSoyisim = table.Column<string>(type: "text", nullable: false),
+                    IletisimNumarasi = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_musteriler", x => x.Id);
+                    table.PrimaryKey("PK_Musteri", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "randevular",
+                name: "Randevu",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    musteriId = table.Column<int>(type: "integer", nullable: false),
-                    calisanId = table.Column<int>(type: "integer", nullable: false),
-                    randevuTarihi = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    hizmet = table.Column<string>(type: "text", nullable: false),
-                    ucret = table.Column<decimal>(type: "numeric", nullable: false),
-                    hizmetId = table.Column<int>(type: "integer", nullable: true)
+                    RandevuTarihi = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    MusteriId = table.Column<int>(type: "integer", nullable: false),
+                    CalisanId = table.Column<int>(type: "integer", nullable: false),
+                    Ucret = table.Column<decimal>(type: "numeric", nullable: false),
+                    HizmetId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_randevular", x => x.Id);
+                    table.PrimaryKey("PK_Randevu", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_randevular_calisanlar_calisanId",
-                        column: x => x.calisanId,
-                        principalTable: "calisanlar",
+                        name: "FK_Randevu_Calisan_CalisanId",
+                        column: x => x.CalisanId,
+                        principalTable: "Calisan",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_randevular_hizmetler_hizmetId",
-                        column: x => x.hizmetId,
-                        principalTable: "hizmetler",
+                        name: "FK_Randevu_Hizmet_HizmetId",
+                        column: x => x.HizmetId,
+                        principalTable: "Hizmet",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_randevular_musteriler_musteriId",
-                        column: x => x.musteriId,
-                        principalTable: "musteriler",
+                        name: "FK_Randevu_Musteri_MusteriId",
+                        column: x => x.MusteriId,
+                        principalTable: "Musteri",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_randevular_calisanId",
-                table: "randevular",
-                column: "calisanId");
+                name: "IX_Randevu_CalisanId",
+                table: "Randevu",
+                column: "CalisanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_randevular_hizmetId",
-                table: "randevular",
-                column: "hizmetId");
+                name: "IX_Randevu_HizmetId",
+                table: "Randevu",
+                column: "HizmetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_randevular_musteriId",
-                table: "randevular",
-                column: "musteriId");
+                name: "IX_Randevu_MusteriId",
+                table: "Randevu",
+                column: "MusteriId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "randevular");
+                name: "Randevu");
 
             migrationBuilder.DropTable(
-                name: "calisanlar");
+                name: "Calisan");
 
             migrationBuilder.DropTable(
-                name: "hizmetler");
+                name: "Hizmet");
 
             migrationBuilder.DropTable(
-                name: "musteriler");
+                name: "Musteri");
         }
     }
 }
