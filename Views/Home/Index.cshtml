@@ -1,6 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Hülya Hasçelik";
+    ViewData["Title"] = "Hülya Hasçelik Beauty Center";
 }
+@{
+    ViewData["ShowNav"] = false;
+}
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -10,12 +14,22 @@
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-    <header>
-        <h1>HÜLYA HASÇELİK BEAUTY CENTER</h1>
+    <header class="header">
+       
+        <h1 class="title">HÜLYA HASÇELİK BEAUTY CENTER</h1>
     </header>
-    <main>
-        <p>Güzelliğinizi yeniden keşfedin...</p>
-        <a href="/Randevu">Randevu Al</a>
-    </main>
+    <button class="appointment-button">Randevu Al</button>
+
+    <section class="slider-section">
+
+        <div class="slider">
+            <div class="slider-item"><img src="~/images/slide1.jpeg" alt="Fotoğraf 1"></div>
+            <div class="slider-item"><img src="~/images/slide2.jpeg" alt="Fotoğraf 2"></div>
+            <div class="slider-item"><img src="~/images/slide3.jpeg" alt="Fotoğraf 3"></div>
+        </div>
+        
+    </section>
+
+
 </body>
 </html>

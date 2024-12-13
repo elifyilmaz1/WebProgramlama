@@ -1,46 +1,140 @@
 ﻿body {
-    font-family: Arial, sans-serif;
-    margin: 0;
+    font-family:'Sans Serif Collection';
+    margin:0;
     padding: 0;
-    background-image: url('/images/hsclk.jpg');
-    color: #333;
+    overflow-x: hidden;
+    background-color:burlywood;
+
 }
 
 header {
-    //background-image: url('/images/leopard.jpg');
-    background-size: cover;
-    color: red;
-    padding: 1rem;
-    text-align: center;
-    font-weight: 700;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-main {
-    padding: 2rem;
-    text-align: center;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    position: fixed;
-    bottom: 0;
+    text-align:center;
+    padding: 10px 20px;
+    position: relative;
+    height: 100px;
     width: 100%;
+    padding-top: 50px;
+    margin-bottom:50px;
 }
 
-a {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
+.background-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width:100%;
+    overflow: hidden;
 }
 
-    a:hover {
-        background-color: #0056b3;
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover 
+}
+
+.title {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 10%;
+    padding-top: 10%;
+    
+    margin-top:10%;
+
+    width: 100%;
+    height:100%;
+
+
+    text-align: center;
+    color: darkred;
+
+    font-size: calc(1rem + 1vw);
+    font-weight: bold;
+    font-family: 'Sans Serif Collection';
+
+    z-index: 10;
+
+    border: 5px double;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    background-image: url('/images/gold.jpeg');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+   
+}
+
+    .appointment-button {
+    position: relative;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url('/images/gold.jpeg');
+    color: darkred;
+    border: double;
+    padding: 10px 20px;
+    font-size: larger;
+    font-weight: bolder;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 15;
+    font-family: 'Sans Serif Collection';
+    padding-top: 20px;
+    margin: 0 auto;
+    margin-top: 10%;
     }
+
+    .appointment-button:hover {
+        background-image:url('/images/gold.jpeg');
+    }
+
+
+.slider {
+    display: flex;
+       transition: transform 0.5s ease-in-out;
+
+    
+}
+
+    .slider-item {
+    flex: 0 0 100%;
+    }
+
+    .slider-item img {
+        width: 50%;
+        height: auto;
+        border-radius: 10px;
+        object-fit:cover;
+    }
+
+.slider:hover {
+    animation: slide 10s infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    33% {
+        transform: translateX(-100%);
+    }
+
+    66% {
+        transform: translateX(-200%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
