@@ -12,24 +12,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="/css/style.css" />
+    <script src="site.js"></script>
+
 </head>
 <body>
     <header class="header">
        
         <h1 class="title">HÜLYA HASÇELİK BEAUTY CENTER</h1>
     </header>
-    <button class="appointment-button">Randevu Al</button>
+    <button class="appointment-button" onclick="window.location.href='/Hesap/Giris'">Randevu Al</button>
 
     <section class="slider-section">
+    <div class="slider-container">
 
         <div class="slider">
-            <div class="slider-item"><img src="~/images/slide1.jpeg" alt="Fotoğraf 1"></div>
-            <div class="slider-item"><img src="~/images/slide2.jpeg" alt="Fotoğraf 2"></div>
-            <div class="slider-item"><img src="~/images/slide3.jpeg" alt="Fotoğraf 3"></div>
+            <div class="slider-item"><img src="~/images/slide1.jpg" alt="Fotoğraf 1"></div>
+            <div class="slider-item"><img src="~/images/slide2.jpg" alt="Fotoğraf 2"></div>
+            <div class="slider-item"><img src="~/images/slide3.jpg" alt="Fotoğraf 3"></div>
         </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+
+        </div>
+
         
     </section>
 
 
 </body>
+
 </html>

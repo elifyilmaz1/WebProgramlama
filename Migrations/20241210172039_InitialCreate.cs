@@ -17,7 +17,6 @@ namespace WebProgramlama.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Isim = table.Column<string>(type: "text", nullable: false),
-                    Gorev = table.Column<string>(type: "text", nullable: false),
                     SaatlikUcret = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
@@ -46,7 +45,10 @@ namespace WebProgramlama.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     IsimSoyisim = table.Column<string>(type: "text", nullable: false),
-                    IletisimNumarasi = table.Column<decimal>(type: "numeric", nullable: false)
+                    IletisimNumarasi = table.Column<decimal>(type: "numeric", nullable: false),
+                    Eposta= table.Column<string>(type: "string", nullable: false),
+                    Sifre= table.Column<string>(type: "string", nullable: false),
+                    Rol = table.Column<string>(type: "string", nullable: false)
                 },
                 constraints: table =>
                 {

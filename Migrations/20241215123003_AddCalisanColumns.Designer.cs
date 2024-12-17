@@ -12,8 +12,8 @@ using WebProgramlama.Models;
 namespace WebProgramlama.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20241210172039_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241215123003_AddCalisanColumns")]
+    partial class AddCalisanColumns
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,15 @@ namespace WebProgramlama.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                  
+                    b.Property<string>("CalismaSaatleri")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Isim")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MolaSaati")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -94,6 +100,9 @@ namespace WebProgramlama.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<TimeSpan>("BaslangicSaati")
+                        .HasColumnType("interval");
 
                     b.Property<int>("CalisanId")
                         .HasColumnType("integer");

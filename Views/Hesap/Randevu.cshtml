@@ -1,0 +1,40 @@
+﻿@model WebProgramlama.Models.Randevu
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Al</title>
+</head>
+<body>
+    <header>
+        <h1>Randevu Al</h1>
+    </header>
+
+    <form method="post" action="/Hesap/Randevu">
+        <div>
+            <label for="Calisan">Çalışan Seçin:</label>
+            <select name="CalisanId" id="Calisan" required>
+                <option value="">Çalışan Seçiniz</option>
+                @foreach (var Calisan in ViewBag.Calisan)
+                {
+                    <option value="@Calisan.Id">@Calisan.Isim</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label for="Tarih">Randevu Tarihi:</label>
+            <input type="date" id="Tarih" name="RandevuTarihi" required />
+        </div>
+
+        <div>
+            <label for="Saat">Randevu Saati:</label>
+            <input type="time" id="Saat" name="BaslangicSaati" required />
+        </div>
+
+        <button type="submit">Randevu Al</button>
+    </form>
+</body>
+</html>

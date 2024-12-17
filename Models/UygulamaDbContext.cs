@@ -29,7 +29,13 @@ namespace WebProgramlama.Models
                 .HasOne(r => r.Musteri)
                 .WithMany(m => m.Randevu)
                 .HasForeignKey(r => r.MusteriId);
-        }
+        
+             modelBuilder.Entity<Randevu>()
+                .HasOne(r => r.Hizmet)
+                .WithMany(h => h.Randevu)
+                .HasForeignKey(r => r.HizmetId);
+   }
+
 }
     }
 

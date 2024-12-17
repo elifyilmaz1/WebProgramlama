@@ -12,8 +12,8 @@ using WebProgramlama.Models;
 namespace WebProgramlama.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20241210172039_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241215133231_AddMusteriColumns")]
+    partial class AddMusteriColumns
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,15 @@ namespace WebProgramlama.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                  
+                    b.Property<string>("CalismaSaatleri")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Isim")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MolaSaati")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -75,12 +81,24 @@ namespace WebProgramlama.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Eposta")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<decimal>("IletisimNumarasi")
                         .HasColumnType("numeric");
 
                     b.Property<string>("IsimSoyisim")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Sifre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Rol")
+                       .IsRequired()
+                       .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -95,10 +113,13 @@ namespace WebProgramlama.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<TimeSpan>("BaslangicSaati")
+                        .HasColumnType("interval");
+
                     b.Property<int>("CalisanId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("HizmetId")
+                    b.Property<int>("HizmetId")
                         .HasColumnType("integer");
 
                     b.Property<int>("MusteriId")
@@ -129,9 +150,11 @@ namespace WebProgramlama.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebProgramlama.Models.Hizmet", null)
+                    b.HasOne("WebProgramlama.Models.Hizmet", "Hizmet")
                         .WithMany("Randevu")
-                        .HasForeignKey("HizmetId");
+                        .HasForeignKey("HizmetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebProgramlama.Models.Musteri", "Musteri")
                         .WithMany("Randevu")
@@ -140,6 +163,8 @@ namespace WebProgramlama.Migrations
                         .IsRequired();
 
                     b.Navigation("Calisan");
+
+                    b.Navigation("Hizmet");
 
                     b.Navigation("Musteri");
                 });
