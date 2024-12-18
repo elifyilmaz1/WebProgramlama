@@ -7,7 +7,6 @@ namespace WebProgramlama.Models
     {
         public int Id { get; set; }
         public DateTime RandevuTarihi { get; set; }
-
         public TimeSpan BaslangicSaati { get; set; }
         public int MusteriId { get; set; }
         public int CalisanId { get; set; }

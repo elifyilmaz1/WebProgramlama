@@ -1,11 +1,13 @@
-﻿@model WebProgramlama.Models.Randevu
-
+﻿@{
+    ViewData["Title"] = "Kayıt ol - Hülya Hasçelik Beauty Center";
+}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Randevu Al</title>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/randevu_style.css" />
 </head>
 <body>
     <header>
@@ -14,6 +16,17 @@
 
     <form method="post" action="/Hesap/Randevu">
         <div>
+        <div>
+            <label for="Isim">Hizmet Seçin:</label>
+            <select name="Isim" id="Isim" required>
+                <option value="">Hizmet Seçiniz</option>
+                @foreach (var Hizmet in ViewBag.Hizmet)
+                {
+                    <option value="@Hizmet.Isim">@Hizmet.Isim-@Hizmet.Ucret</option>
+                }
+            </select>
+        </div>
+
             <label for="Calisan">Çalışan Seçin:</label>
             <select name="CalisanId" id="Calisan" required>
                 <option value="">Çalışan Seçiniz</option>
@@ -25,12 +38,11 @@
         </div>
 
         <div>
-            <label for="Tarih">Randevu Tarihi:</label>
+            <label for="RandevuTarihi">Tarih:</label>
             <input type="date" id="Tarih" name="RandevuTarihi" required />
         </div>
-
         <div>
-            <label for="Saat">Randevu Saati:</label>
+            <label for="BaslangicSaati">Saat:</label>
             <input type="time" id="Saat" name="BaslangicSaati" required />
         </div>
 

@@ -4,6 +4,8 @@ using WebProgramlama.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddMvc();
+builder.Services.AddSession();
 
 builder.Services.AddDbContext<UygulamaDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -19,9 +21,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(

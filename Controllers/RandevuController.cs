@@ -17,7 +17,8 @@ namespace WebProgramlama.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet]
+
+        [HttpGet] //randevu listele
         public async Task<IActionResult> GetAllRandevu()
         {
             var Randevu = await _dbContext.Randevu
@@ -28,7 +29,7 @@ namespace WebProgramlama.Controllers
             return Ok(Randevu);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]// randevuyu idsine göre sorgula
         public async Task<IActionResult> GetRandevuById(int id)
         {
             var randevu = await _dbContext.Randevu
@@ -43,7 +44,8 @@ namespace WebProgramlama.Controllers
 
             return Ok(randevu);
         }
-        [HttpPost]
+
+        [HttpPost]//yeni randevu oluştur
         public async Task<IActionResult> AddRandevu([FromBody] Randevu yeniRandevu)
         {
             if (!ModelState.IsValid)
@@ -54,19 +56,19 @@ namespace WebProgramlama.Controllers
             var uygunlukKontrol = await _dbContext.Randevu.AnyAsync(r =>
                 r.CalisanId == yeniRandevu.CalisanId &&
                 r.RandevuTarihi == yeniRandevu.RandevuTarihi);
-            
+
             if (uygunlukKontrol)
             {
                 return BadRequest("Bu saat için seçilen çalışan uygun değil.");
             }
-            
+
             _dbContext.Randevu.Add(yeniRandevu);
             await _dbContext.SaveChangesAsync();
-            
+
             return CreatedAtAction(nameof(GetAllRandevu), new { id = yeniRandevu.Id }, yeniRandevu);
         }
-        
-        [HttpPut("{id}")]
+
+        [HttpPut("{id}")]// randevu guncelle
         public async Task<IActionResult> UpdateRandevu(int id, [FromBody] Randevu guncelRandevu)
         {
             if (id != guncelRandevu.Id)
@@ -90,8 +92,7 @@ namespace WebProgramlama.Controllers
 
             return Ok(mevcutRandevu);
         }
-
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")]// randevu silme
         public async Task<IActionResult> DeleteRandevu(int id)
         {
             var randevu = await _dbContext.Randevu.FindAsync(id);
@@ -107,3 +108,6 @@ namespace WebProgramlama.Controllers
         }
     }
 }
+
+       
+

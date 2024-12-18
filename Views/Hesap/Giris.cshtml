@@ -13,22 +13,30 @@
 <body>
     <header>
         <h1>Üye Girişi</h1>
-    </header> 
+    </header>
+    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+        <div class="alert alert-danger">@error.ErrorMessage</div>
+    }
+
 
     <section class="login-section">
-        <form action="/login" method="post">
+        <form action="/Hesap/Giris" method="post">
             <div class="form-group">
-            <label for="email">E-posta:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="Eposta">E-posta:</label>
+            <input type="email" id="Eposta" name="Eposta" required>
             </div>
             <div class="form-group">
-            <label for="password">Şifre:</label>
-            <input type="password" id="password" name="password" required>
+            <label for="Sifre">Şifre:</label>
+            <input type="password" id="Sifre" name="Sifre" required>
             </div>
 
-            <button type="submit">Giriş Yap</button>
-        </form>
-
+            <button type="submit" >Giriş Yap</button>
+        </form> 
+        @if (!ViewData.ModelState.IsValid)
+    {
+       
+    }
         <p>Hesabınız yok mu? <a href="/Hesap/Kayit">Üye Olun</a></p>
     </section>
 

@@ -18,7 +18,6 @@ namespace WebProgramlama.Models
      protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             
             modelBuilder.Entity<Randevu>()
                 .HasOne(r => r.Calisan)
@@ -35,6 +34,7 @@ namespace WebProgramlama.Models
                 .WithMany(h => h.Randevu)
                 .HasForeignKey(r => r.HizmetId);
    }
+        
 
 }
     }

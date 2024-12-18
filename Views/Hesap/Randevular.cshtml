@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WebProgramlama.Models.Randevu>
+
+    <h2>Randevularım</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Çalışan</th>
+                <th>Hizmet</th>
+                <th>Tarih</th>
+                <th>Başlangıç Saati</th>
+                <th>Ücret</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var randevu in Model)
+            {
+            <tr>
+                <td>@randevu.Calisan.Isim</td>
+                <td>@randevu.Hizmet.Isim</td>
+                <td>@randevu.RandevuTarihi.ToShortDateString()</td>
+                <td>@randevu.BaslangicSaati</td>
+                <td>@randevu.Ucret</td>
+            </tr>
+            }
+        </tbody>
+    </table>

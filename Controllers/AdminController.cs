@@ -2,9 +2,9 @@
 
 namespace WebProgramlama.Controllers
 {
-    public class YonetimController : Controller
+    public class AdminController : Controller
     {
-        public IActionResult AdminPanel()
+        public IActionResult Admin()
         {
             return View();
         }
