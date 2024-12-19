@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Kayıt ol - Hülya Hasçelik Beauty Center";
+    ViewData["Title"] = "Randevu al - Hülya Hasçelik Beauty Center";
 }
 <!DOCTYPE html>
 <html lang="tr">
@@ -12,7 +12,20 @@
 <body>
     <header>
         <h1>Randevu Al</h1>
-    </header>
+    </header>   
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+  @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
 
     <form method="post" action="/Hesap/Randevu">
         <div>
@@ -20,19 +33,19 @@
             <label for="Isim">Hizmet Seçin:</label>
             <select name="Isim" id="Isim" required>
                 <option value="">Hizmet Seçiniz</option>
-                @foreach (var Hizmet in ViewBag.Hizmet)
+                @foreach (var Hizmet in ViewBag.Hizmet as List<Hizmet>)
                 {
-                    <option value="@Hizmet.Isim">@Hizmet.Isim-@Hizmet.Ucret</option>
+                    <option value="@Hizmet.Isim">@Hizmet.Isim-@Hizmet.Ucret </option>
                 }
             </select>
         </div>
 
-            <label for="Calisan">Çalışan Seçin:</label>
-            <select name="CalisanId" id="Calisan" required>
+            <label for="CalisanIsim">Çalışan Seçin:</label>
+            <select name="CalisanIsim" id="CalisanIsim" required>
                 <option value="">Çalışan Seçiniz</option>
-                @foreach (var Calisan in ViewBag.Calisan)
+                @foreach (var Calisan in ViewBag.Calisan as List<Calisan>)
                 {
-                    <option value="@Calisan.Id">@Calisan.Isim</option>
+                    <option value="@Calisan.Isim">@Calisan.Isim</option>
                 }
             </select>
         </div>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WebProgramlama.Models.Musteri>
+
+<h2>Kayıtlı Müşteriler</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>İsim</th>
+            <th>Email</th>
+            <th>İletişim Numarası</th>
+            <th>Şifre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Musteri in Model)
+        {
+            <tr>
+                <td>@Musteri.Id</td>
+                <td>@Musteri.IsimSoyisim</td>
+                <td>@Musteri.IletisimNumarasi</td>
+                <td>@Musteri.Eposta</td>
+                <td>@Musteri.Sifre</td>
+                <td>@Musteri.Rol</td>
+            </tr>
+        }
+    </tbody>
+</table>

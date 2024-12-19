@@ -87,15 +87,15 @@ namespace WebProgramlama.Controllers
             // E-posta bulunamazsa ya da şifre yanlışsa hata mesajı
             if (Musteri == null || !BCrypt.Net.BCrypt.Verify(Sifre, Musteri.Sifre))
             {
-                ModelState.AddModelError("", "E-posta veya şifre hatalı.");
+                ModelState.AddModelError("", "E-posta veya şifre yanlış!");
                 return View();
             }
 
-            // Oturum açan kullanıcı bilgilerini session'a kaydet
+            // E-posta ve şifre doğruysa oturum aç
             HttpContext.Session.SetString("MusteriEposta", Musteri.Eposta);
             HttpContext.Session.SetInt32("MusteriId", Musteri.Id);
 
-            // Admin ise admin sayfasına yönlendir, değilse randevu sayfasına
+            // Admin mi kontrol et
             if (Musteri.Rol == "Admin")
             {
                 return RedirectToAction("Admin", "Admin");
@@ -121,7 +121,15 @@ namespace WebProgramlama.Controllers
 
             // Seçilen çalışan, hizmet ve müşteri bilgilerini al
             var Calisan = _dbContext.Calisan.FirstOrDefault(c => c.Id == CalisanId);
-            var Musteri = _dbContext.Musteri.FirstOrDefault(m => m.Id == HttpContext.Session.GetInt32("MusteriId").Value);
+            var MusteriId = HttpContext.Session.GetInt32("MusteriId");
+
+            if (MusteriId == null)
+            {
+                ModelState.AddModelError("", "Oturum açmanız gerekiyor.");
+                return View();
+            }
+
+            var Musteri = _dbContext.Musteri.FirstOrDefault(m => m.Id == MusteriId.Value);
             var Hizmet = _dbContext.Hizmet.FirstOrDefault(h => h.Id == HizmetId);
 
             // Geçersiz çalışan veya hizmet seçimi durumunda hata mesajı
@@ -162,14 +170,7 @@ namespace WebProgramlama.Controllers
             _dbContext.SaveChanges();
 
             // Randevu onay sayfasına yönlendir
-            return RedirectToAction("RandevuOnay");
-        }
-
-        // Randevu onay sayfası
-        [HttpGet]
-        public IActionResult RandevuOnay()
-        {
-            return View();
+            return RedirectToAction("Randevu");
         }
     }
 }
