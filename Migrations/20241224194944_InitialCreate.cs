@@ -1,13 +1,14 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace WebProgramlama.Migrations
 {
+    /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -17,7 +18,9 @@ namespace WebProgramlama.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Isim = table.Column<string>(type: "text", nullable: false),
-                    SaatlikUcret = table.Column<decimal>(type: "numeric", nullable: false)
+                    CalismaSaatleri = table.Column<string>(type: "text", nullable: false),
+                    MolaSaati = table.Column<string>(type: "text", nullable: false),
+                    SaatlikUcret = table.Column<decimal>(type: "numeric", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,7 +34,7 @@ namespace WebProgramlama.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Isim = table.Column<string>(type: "text", nullable: false),
-                    Ucret = table.Column<decimal>(type: "numeric", nullable: false)
+                    Ucret = table.Column<decimal>(type: "numeric", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,10 +48,10 @@ namespace WebProgramlama.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     IsimSoyisim = table.Column<string>(type: "text", nullable: false),
-                    IletisimNumarasi = table.Column<decimal>(type: "numeric", nullable: false),
-                    Eposta= table.Column<string>(type: "string", nullable: false),
-                    Sifre= table.Column<string>(type: "string", nullable: false),
-                    Rol = table.Column<string>(type: "string", nullable: false)
+                    Eposta = table.Column<string>(type: "text", nullable: false),
+                    IletisimNumarasi = table.Column<string>(type: "text", nullable: false),
+                    Rol = table.Column<string>(type: "text", nullable: false),
+                    Sifre = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,10 +65,11 @@ namespace WebProgramlama.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RandevuTarihi = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    MusteriId = table.Column<int>(type: "integer", nullable: false),
+                    BaslangicSaati = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    Ucret = table.Column<decimal>(type: "numeric", nullable: true),
                     CalisanId = table.Column<int>(type: "integer", nullable: false),
-                    Ucret = table.Column<decimal>(type: "numeric", nullable: false),
-                    HizmetId = table.Column<int>(type: "integer", nullable: true)
+                    HizmetId = table.Column<int>(type: "integer", nullable: false),
+                    MusteriId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +84,8 @@ namespace WebProgramlama.Migrations
                         name: "FK_Randevu_Hizmet_HizmetId",
                         column: x => x.HizmetId,
                         principalTable: "Hizmet",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Randevu_Musteri_MusteriId",
                         column: x => x.MusteriId,
@@ -88,36 +93,12 @@ namespace WebProgramlama.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Randevu_CalisanId",
-                table: "Randevu",
-                column: "CalisanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Randevu_HizmetId",
-                table: "Randevu",
-                column: "HizmetId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Randevu_MusteriId",
-                table: "Randevu",
-                column: "MusteriId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Randevu");
 
-            migrationBuilder.DropTable(
-                name: "Calisan");
-
-            migrationBuilder.DropTable(
-                name: "Hizmet");
-
-            migrationBuilder.DropTable(
-                name: "Musteri");
         }
     }
 }

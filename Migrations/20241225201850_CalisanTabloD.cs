@@ -5,14 +5,19 @@
 namespace WebProgramlama.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRolToMusteri : Migration
+    public partial class CalisanTabloD : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "MolaSaati",
+                table: "Calisan",
+                newName: "YapabildigiIslemler");
+
             migrationBuilder.AddColumn<string>(
-                name: "Rol",
-                table: "Musteri",
+                name: "UzmanlikAlani",
+                table: "Calisan",
                 type: "text",
                 nullable: false,
                 defaultValue: "");
@@ -22,8 +27,13 @@ namespace WebProgramlama.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Rol",
-                table: "Musteri");
+                name: "UzmanlikAlani",
+                table: "Calisan");
+
+            migrationBuilder.RenameColumn(
+                name: "YapabildigiIslemler",
+                table: "Calisan",
+                newName: "MolaSaati");
         }
     }
 }

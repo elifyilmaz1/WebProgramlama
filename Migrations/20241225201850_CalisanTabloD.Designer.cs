@@ -12,8 +12,8 @@ using WebProgramlama.Models;
 namespace WebProgramlama.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20241215134600_AddRolToMusteri")]
-    partial class AddRolToMusteri
+    [Migration("20241225201850_CalisanTabloD")]
+    partial class CalisanTabloD
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,12 +41,16 @@ namespace WebProgramlama.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("MolaSaati")
+                    b.Property<decimal>("SaatlikUcret")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("UzmanlikAlani")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("SaatlikUcret")
-                        .HasColumnType("numeric");
+                    b.Property<string>("YapabildigiIslemler")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -85,8 +89,9 @@ namespace WebProgramlama.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("IletisimNumarasi")
-                        .HasColumnType("numeric");
+                    b.Property<string>("IletisimNumarasi")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("IsimSoyisim")
                         .IsRequired()

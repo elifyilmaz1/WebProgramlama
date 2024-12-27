@@ -12,8 +12,8 @@ using WebProgramlama.Models;
 namespace WebProgramlama.Migrations
 {
     [DbContext(typeof(UygulamaDbContext))]
-    [Migration("20241215123003_AddCalisanColumns")]
-    partial class AddCalisanColumns
+    [Migration("20241224194944_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,10 +81,23 @@ namespace WebProgramlama.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("IletisimNumarasi")
-                        .HasColumnType("numeric");
+                    b.Property<string>("Eposta")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IletisimNumarasi")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("IsimSoyisim")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sifre")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -107,7 +120,7 @@ namespace WebProgramlama.Migrations
                     b.Property<int>("CalisanId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("HizmetId")
+                    b.Property<int>("HizmetId")
                         .HasColumnType("integer");
 
                     b.Property<int>("MusteriId")
@@ -138,9 +151,11 @@ namespace WebProgramlama.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebProgramlama.Models.Hizmet", null)
+                    b.HasOne("WebProgramlama.Models.Hizmet", "Hizmet")
                         .WithMany("Randevu")
-                        .HasForeignKey("HizmetId");
+                        .HasForeignKey("HizmetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebProgramlama.Models.Musteri", "Musteri")
                         .WithMany("Randevu")
@@ -149,6 +164,8 @@ namespace WebProgramlama.Migrations
                         .IsRequired();
 
                     b.Navigation("Calisan");
+
+                    b.Navigation("Hizmet");
 
                     b.Navigation("Musteri");
                 });

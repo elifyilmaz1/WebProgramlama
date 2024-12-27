@@ -37,6 +37,13 @@ namespace WebProgramlama.Controllers
             return View();
         }
 
+       
+            public IActionResult Calisanlar()
+            {
+                return View(); // Bu, Calisanlar.cshtml dosyasını döndürecektir.
+            }
+        
+
         // Kayıt İşlemi
         [HttpPost]
         public IActionResult Kayit(string IsimSoyisim, string IletisimNumarasi, string Eposta, string Sifre, string TekrarSifre)
@@ -111,66 +118,6 @@ namespace WebProgramlama.Controllers
             return RedirectToAction("Giris");
         }
 
-        // Randevu İşlemi
-        [HttpPost]
-        public IActionResult Randevu(int CalisanId, DateTime RandevuTarihi, TimeSpan BaslangicSaati, int HizmetId)
-        {
-            // Çalışan ve hizmet listelerini görüntüle
-            ViewBag.Calisan = _dbContext.Calisan.ToList();
-            ViewBag.Hizmet = _dbContext.Hizmet.ToList();
-
-            // Seçilen çalışan, hizmet ve müşteri bilgilerini al
-            var Calisan = _dbContext.Calisan.FirstOrDefault(c => c.Id == CalisanId);
-            var MusteriId = HttpContext.Session.GetInt32("MusteriId");
-
-            if (MusteriId == null)
-            {
-                ModelState.AddModelError("", "Oturum açmanız gerekiyor.");
-                return View();
-            }
-
-            var Musteri = _dbContext.Musteri.FirstOrDefault(m => m.Id == MusteriId.Value);
-            var Hizmet = _dbContext.Hizmet.FirstOrDefault(h => h.Id == HizmetId);
-
-            // Geçersiz çalışan veya hizmet seçimi durumunda hata mesajı
-            if (Calisan == null)
-            {
-                ModelState.AddModelError("", "Geçersiz çalışan seçimi.");
-                return View();
-            }
-
-            if (Hizmet == null)
-            {
-                ModelState.AddModelError("", "Geçersiz hizmet seçimi.");
-                return View();
-            }
-
-            // Geçmiş tarihe randevu alma durumunda hata mesajı
-            if (RandevuTarihi.Date < DateTime.UtcNow.Date ||
-                (RandevuTarihi.Date == DateTime.UtcNow.Date && BaslangicSaati < DateTime.UtcNow.TimeOfDay))
-            {
-                ModelState.AddModelError("", "Geçmiş bir tarihe randevu oluşturamazsınız.");
-                return View();
-            }
-
-            // Yeni randevu oluştur ve veritabanına kaydet
-            var yeniRandevu = new Randevu
-            {
-                CalisanId = CalisanId,
-                RandevuTarihi = RandevuTarihi,
-                BaslangicSaati = BaslangicSaati,
-                MusteriId = Musteri.Id,
-                Calisan = Calisan,
-                HizmetId = HizmetId,
-                Hizmet = Hizmet,
-                Musteri = Musteri
-            };
-
-            _dbContext.Randevu.Add(yeniRandevu);
-            _dbContext.SaveChanges();
-
-            // Randevu onay sayfasına yönlendir
-            return RedirectToAction("Randevu");
+        
         }
     }
-}

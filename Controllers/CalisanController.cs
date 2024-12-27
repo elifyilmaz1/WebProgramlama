@@ -25,6 +25,14 @@ namespace WebProgramlama.Controllers
             return Ok(Calisan);
 
         }
+        public ActionResult Uzmanlar()
+        {
+            var calisanlar = _dbContext.Calisan.ToList();
+            return Ok(calisanlar);
+        }
+        [HttpGet]
+    
+
         [HttpGet("Randevu/{CalisanId}")]
         public async Task<IActionResult> GetRandevu(int calisanId)
         {
@@ -113,8 +121,8 @@ namespace WebProgramlama.Controllers
             await _dbContext.SaveChangesAsync();
             return NoContent();
         }
-    
-    [HttpDelete("Randevu/{id}")]
+
+        [HttpDelete("Randevu/{id}")]
         public async Task<IActionResult> DeleteRandevu(int id)
         {
             var Randevu = await _dbContext.Randevu.FirstOrDefaultAsync(r => r.Id == id);
@@ -130,4 +138,5 @@ namespace WebProgramlama.Controllers
             return NoContent();
         }
 
-    } }
+    }
+}

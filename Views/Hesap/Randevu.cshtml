@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Randevu al - Hülya Hasçelik Beauty Center";
 }
+@{
+    var minHour = "10:00";
+    var maxHour = "17:00";
+}
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -12,54 +17,89 @@
 <body>
     <header>
         <h1>Randevu Al</h1>
-    </header>   
+    </header>
+
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success">
             @TempData["SuccessMessage"]
         </div>
     }
-  @if (TempData["ErrorMessage"] != null)
+    @if (TempData["ErrorMessage"] != null)
     {
         <div class="alert alert-danger">
             @TempData["ErrorMessage"]
         </div>
     }
 
-
-    <form method="post" action="/Hesap/Randevu">
+    <!-- Randevu Formu -->
+    <form id="randevuForm">
         <div>
-        <div>
-            <label for="Isim">Hizmet Seçin:</label>
-            <select name="Isim" id="Isim" required>
+            <label for="HizmetId">Hizmet Seçin:</label>
+            <select name="HizmetId" id="HizmetId" required>
                 <option value="">Hizmet Seçiniz</option>
-                @foreach (var Hizmet in ViewBag.Hizmet as List<Hizmet>)
+                @foreach (var Hizmet in ViewBag.Hizmet)
                 {
-                    <option value="@Hizmet.Isim">@Hizmet.Isim-@Hizmet.Ucret </option>
+                    <option value="@Hizmet.Id">@Hizmet.Isim - @Hizmet.Ucret</option>
                 }
             </select>
         </div>
 
-            <label for="CalisanIsim">Çalışan Seçin:</label>
-            <select name="CalisanIsim" id="CalisanIsim" required>
+        <div>
+            <label for="CalisanId">Çalışan Seçin:</label>
+            <select name="CalisanId" id="CalisanId" required>
                 <option value="">Çalışan Seçiniz</option>
                 @foreach (var Calisan in ViewBag.Calisan as List<Calisan>)
                 {
-                    <option value="@Calisan.Isim">@Calisan.Isim</option>
+                    <option value="@Calisan.Id">@Calisan.Isim</option>
                 }
             </select>
         </div>
 
         <div>
             <label for="RandevuTarihi">Tarih:</label>
-            <input type="date" id="Tarih" name="RandevuTarihi" required />
-        </div>
-        <div>
-            <label for="BaslangicSaati">Saat:</label>
-            <input type="time" id="Saat" name="BaslangicSaati" required />
+            <input type="date" id="RandevuTarihi" name="RandevuTarihi" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
         </div>
 
-        <button type="submit">Randevu Al</button>
+        <div>
+            <label for="BaslangicSaati">Saat:</label>
+            <input type="time" id="BaslangicSaati" name="BaslangicSaati" min="@minHour" max="@maxHour" required />
+        </div>
+
+        <button type="button" id="submitButton">Randevu Al</button>
     </form>
+
+    @section Scripts {
+        <script>
+            document.getElementById('submitButton').addEventListener('click', async () => {
+                const randevuForm = document.getElementById('randevuForm');
+
+                const data = {
+                    HizmetId: document.getElementById('HizmetId').value,
+                    CalisanId: document.getElementById('CalisanId').value,
+                    RandevuTarihi: document.getElementById('RandevuTarihi').value,
+                    BaslangicSaati: document.getElementById('BaslangicSaati').value
+                };
+
+                const response = await fetch('/api/Randevu', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Randevu başarıyla kaydedildi.');
+                    // Yönlendirme yapılabilir
+                } else {
+                    const error = await response.json();
+                    console.error('Hata:', error);
+                    alert('Bir hata oluştu.');
+                }
+            });
+
+        </script>
+    }
 </body>
 </html>

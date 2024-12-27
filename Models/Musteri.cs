@@ -7,10 +7,10 @@ namespace WebProgramlama.Models
     {
         public int Id { get; set; }
         public required string IsimSoyisim { get; set; }
-        public string IletisimNumarasi { get; set; } 
-        public required string Eposta { get; set; } 
+        public required string IletisimNumarasi { get; set; }
+        public required string Eposta { get; set; }
         public required string Sifre { get; set; }
         public required string Rol { get; set; }
-        public required ICollection<Randevu> Randevu { get; set; }
+        public virtual ICollection<Randevu> Randevu { get; set; }
     }
 }

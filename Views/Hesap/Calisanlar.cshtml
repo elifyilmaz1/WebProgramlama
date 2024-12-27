@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Uzmanlarımız - Hülya Hasçelik Beauty Center";
+}
+@model List<WebProgramlama.Models.Calisan>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/calisanlar_style.css" />
+</head>
+<body>
+    <header>
+        <h1>Uzmanlarımız</h1>
+    </header>
+    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+        <div class="alert alert-danger">@error.ErrorMessage</div>
+    }
+
+<section class="slider-section">
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slider-item">
+                <img  class="foto" src="~/images/hulya.jpeg" alt="Fotoğraf 1">
+                <p class="photo-description">Hülya Hasçelik - Uzman Estetisyen</p>
+                    </div>
+                
+            <div class="slider-item">
+                <img src="~/images/buse.jpeg" alt="Fotoğraf 2">
+                <p class="photo-description">Buse Bayraktar - Kaş Uzmanı</p>
+            </div>
+            <div class="slider-item">
+                <img src="~/images/nesly.jpeg" alt="Fotoğraf 3">
+                <p class="photo-description">Neslihan(Nesly) Hasçelik - Cilt Bakım Uzmanı</p>
+            </div>
+            <div class="slider-item">
+                <img src="~/images/fatosh.jpeg" alt="Fotoğraf 4">
+                <p class="photo-description">Fatma(Fatosh) Hasçelik - Nail Art Uzmanı</p>
+                    </div>
+                
+        </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+</section>
+
+</body>
+
+</html>

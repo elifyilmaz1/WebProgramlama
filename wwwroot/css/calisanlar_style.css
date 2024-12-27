@@ -1,0 +1,98 @@
+﻿body {
+    font-family: 'Sans Serif Collection';
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-image: url('/images/salon.jpg');
+    background-size:cover;
+}
+
+header {
+    position: relative;
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    color: darkred;
+    font-size: calc(1rem + 1vw);
+    font-weight: bold;
+    font-family: 'Sans Serif Collection';
+    z-index: 10;
+    border: 5px double darkred;
+    border-radius: 5px;
+    background-image: url('/images/gold.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    margin-top:50px;
+    margin-left:10px;
+    padding-left:revert-layer;
+    
+}
+label {
+    position: relative;
+    margin: 0 auto;
+    width: 10%;
+    height: 10%;
+    text-align: center;
+    color: darkred;
+    font-weight: bold;
+    font-family: 'Sans Serif Collection';
+    z-index: 10;
+    border: 5px double darkred;
+    border-radius: 5px;
+    background-image: url('/images/gold.jpeg') ;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 5px;
+}
+
+
+button {
+    position: relative;
+    margin: 20px auto;
+    display: block;
+    background-image: url('/images/gold.jpeg');
+    color: darkred;
+    border: double;
+    padding: 10px 20px;
+    font-size: larger;
+    font-weight: bolder;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'Sans Serif Collection';
+    text-align: center;
+
+}
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+
+
+
+.foto {
+    width: 100%; 
+    max-width: 300px; 
+    height: auto; 
+    object-fit: cover; 
+    border-radius: 5px; 
+}
+.photo-description {
+    text-align: center;
+    color: darkred;
+    font-weight: bold;
+    font-size: 2rem;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7); /* Hafif transparan beyaz arka plan */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}

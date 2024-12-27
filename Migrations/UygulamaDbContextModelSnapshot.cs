@@ -38,12 +38,16 @@ namespace WebProgramlama.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("MolaSaati")
+                    b.Property<decimal>("SaatlikUcret")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("UzmanlikAlani")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("SaatlikUcret")
-                        .HasColumnType("numeric");
+                    b.Property<string>("YapabildigiIslemler")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

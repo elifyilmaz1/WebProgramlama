@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using WebProgramlama.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using WebProgramlama.ViewModels;
+using System;
 
 namespace WebProgramlama.Controllers
 {
@@ -17,8 +19,7 @@ namespace WebProgramlama.Controllers
             _dbContext = dbContext;
         }
 
-
-        [HttpGet] //randevu listele
+        [HttpGet]  
         public async Task<IActionResult> GetAllRandevu()
         {
             var Randevu = await _dbContext.Randevu
@@ -29,24 +30,73 @@ namespace WebProgramlama.Controllers
             return Ok(Randevu);
         }
 
-        [HttpGet("{id}")]// randevuyu idsine göre sorgula
+        [HttpGet("{id}")] // Randevuyu ID'ye göre getir
         public async Task<IActionResult> GetRandevuById(int id)
         {
             var randevu = await _dbContext.Randevu
-                .Include(r => r.Calisan)
-                .Include(r => r.Musteri)
                 .FirstOrDefaultAsync(r => r.Id == id);
+
 
             if (randevu == null)
             {
                 return NotFound("Randevu bulunamadı.");
             }
 
-            return Ok(randevu);
+
+            var musteri = await _dbContext.Musteri
+    .Where(m => m.Id == randevu.MusteriId)
+    .Select(m => new
+    {
+        m.Id,
+        m.IsimSoyisim,
+        m.IletisimNumarasi,
+        m.Eposta
+    })
+    .FirstOrDefaultAsync();
+
+            var calisan = await _dbContext.Calisan
+                                .Where(m => m.Id == randevu.CalisanId)
+                                .Select(m => new
+                                {
+                                    m.Id,
+                                    m.Isim,
+                                    m.UzmanlikAlani,
+                                    m.YapabildigiIslemler,
+                                    m.SaatlikUcret,
+                                    m.CalismaSaatleri
+                                })
+                                .FirstOrDefaultAsync();
+            var hizmet = await _dbContext.Hizmet
+                .Where(h => h.Id == randevu.HizmetId)
+                .Select(h => new
+                {
+                    h.Id,
+                    h.Isim,
+                    h.Ucret
+                })
+                .FirstOrDefaultAsync();
+
+            if (musteri == null || calisan == null || hizmet == null)
+            {
+                return NotFound("Randevu ile ilişkili veriler bulunamadı.");
+            }
+
+            var gosterilecekRandevu = new
+            {
+                randevu.Id,
+                randevu.RandevuTarihi,
+                randevu.BaslangicSaati,
+                randevu.Ucret,
+                Musteri = musteri,
+                Calisan = calisan,
+                Hizmet = hizmet
+            };
+
+            return Ok(gosterilecekRandevu);
         }
 
-        [HttpPost]//yeni randevu oluştur
-        public async Task<IActionResult> AddRandevu([FromBody] Randevu yeniRandevu)
+        [HttpPost] // Yeni randevu oluştur
+        public async Task<IActionResult> AddRandevu([FromBody] RandevuOlustur yeniRandevu)
         {
             if (!ModelState.IsValid)
             {
@@ -61,38 +111,49 @@ namespace WebProgramlama.Controllers
             {
                 return BadRequest("Bu saat için seçilen çalışan uygun değil.");
             }
+            int musteriId = HttpContext.Session.GetInt32("MusteriId")!.Value;
+            var ucret = _dbContext.Hizmet.FirstOrDefault(h => h.Id == yeniRandevu.HizmetId)!.Ucret;
 
-            _dbContext.Randevu.Add(yeniRandevu);
-            await _dbContext.SaveChangesAsync();
+            DateTime randevuTarihi = yeniRandevu.RandevuTarihi;
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Turkey Standard Time");
+            randevuTarihi = TimeZoneInfo.ConvertTime(randevuTarihi, timeZoneInfo); // Zaman dilimini belirt
+            Randevu eklenecekRandevu = new Randevu
+            {
+                CalisanId = yeniRandevu.CalisanId,
+                MusteriId = musteriId,
+                HizmetId = yeniRandevu.HizmetId,
+                RandevuTarihi = randevuTarihi,
+                BaslangicSaati = yeniRandevu.BaslangicSaati, // TimeSpan olarak atanıyor
+                Ucret = ucret,
+            };
 
-            return CreatedAtAction(nameof(GetAllRandevu), new { id = yeniRandevu.Id }, yeniRandevu);
+            try
+            {
+                _dbContext.Randevu.Add(eklenecekRandevu);
+                await _dbContext.SaveChangesAsync();
+
+                // Randevu oluşturulduktan sonra ilişkili verileri yüklemek
+                var randevu = await _dbContext.Randevu
+                    .Include(r => r.Calisan)   // Calisan'ı yükle
+                    .Include(r => r.Musteri)   // Musteri'yi yükle
+                    .Include(r => r.Hizmet)    // Hizmet'i yükle
+                    .FirstOrDefaultAsync(r => r.Id == eklenecekRandevu.Id);
+
+                if (randevu == null)
+                {
+                    return NotFound("Randevu bulunamadı.");
+                }
+
+                return CreatedAtAction(nameof(GetRandevuById), new { id = randevu.Id }, randevu);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("Randevu eklenirken bir hata oluştu." +  ex.Message);
+            }
+            
         }
 
-        [HttpPut("{id}")]// randevu guncelle
-        public async Task<IActionResult> UpdateRandevu(int id, [FromBody] Randevu guncelRandevu)
-        {
-            if (id != guncelRandevu.Id)
-            {
-                return BadRequest("Id uyuşmuyor.");
-            }
-
-            var mevcutRandevu = await _dbContext.Randevu.FindAsync(id);
-
-            if (mevcutRandevu == null)
-            {
-                return NotFound("Randevu bulunamadı.");
-            }
-
-
-            mevcutRandevu.RandevuTarihi = guncelRandevu.RandevuTarihi;
-            mevcutRandevu.CalisanId = guncelRandevu.CalisanId;
-            mevcutRandevu.MusteriId = guncelRandevu.MusteriId;
-
-            await _dbContext.SaveChangesAsync();
-
-            return Ok(mevcutRandevu);
-        }
-        [HttpDelete("{id}")]// randevu silme
+        [HttpDelete("{id}")] // Randevuyu sil
         public async Task<IActionResult> DeleteRandevu(int id)
         {
             var randevu = await _dbContext.Randevu.FindAsync(id);
@@ -108,6 +169,3 @@ namespace WebProgramlama.Controllers
         }
     }
 }
-
-       
-

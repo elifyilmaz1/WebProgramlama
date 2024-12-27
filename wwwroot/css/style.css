@@ -112,5 +112,17 @@ header {
     border-radius: 5px;
 }
 
+.p {
+    
+    font-family: 'Sans Serif Collection';
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color:antiquewhite;
+    background-size: cover;
+}
 
 
+.img{
+    padding-left:initial;
+}
