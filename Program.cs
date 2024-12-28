@@ -6,6 +6,7 @@ using Mysqlx.Crud;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAIService, AIService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
