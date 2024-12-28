@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Sonuç - Hülya Hasçelik Beauty Center";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/yapayzeka_style.css" />
+</head>
+<body>
+    <div class="container">
+       
+
+        <div class="result-container"
+
+            @if (ViewData["ResultImageUrl"] != null)
+            {
+                <div class="mt-4">
+                    <img src="@ViewData["ResultImageUrl"]" alt="Sonuç" class="img-fluid border rounded" />
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger mt-4">
+                    <p>Bir hata oluştu. Lütfen tekrar deneyin.</p>
+                </div>
+            }
+
+            <div class="mt-4">
+                <a asp-controller="YapayZeka" asp-action="AI" class="btn btn-secondary">Geri Dön</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

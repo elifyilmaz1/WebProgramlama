@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Yapay Zeka - Hülya Hasçelik Beauty Center";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/yapayzeka_style.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Yapay Zeka ile Güzelliğini keşfet</h1>
+        </header>
+
+        <div class="form-container">
+            <form asp-controller="YapayZeka" asp-action="ProcessPhoto" enctype="multipart/form-data" method="post">
+                <div class="mb-3">
+                    <label for="photo" class="form-label">Fotoğrafınızı Yükleyiniz:</label>
+                    <input type="file" name="photo" id="photo" class="form-control" accept="image/*" required>
+                </div>
+                <div class="mb-3">
+                    <label for="userRequest" class="form-label">Talebinizi Yazın:</label>
+                    <textarea name="userRequest" id="userRequest" class="form-control" rows="3" placeholder="..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" id="submitButton">Gönder</button>
+            </form>
+
+            @if (ViewData["Error"] != null)
+            {
+                <div class="alert alert-danger mt-3">@ViewData["Error"]</div>
+            }
+        </div> 
+    </div>
+     
+    <script src="/js/script.js"></script>
+</body>
+</html>
